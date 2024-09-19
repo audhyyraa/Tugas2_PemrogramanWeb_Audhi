@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input Mahasiswa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Form Input Mahasiswa</h2>
+        <form id="studentForm">
+            <label for="name">Nama:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <label for="nim">NIM:</label><br>
+            <input type="number" id="nim" name="nim" required><br>
+            <label for="class">Kelas:</label><br>
+            <input type="text" id="class" name="class" required><br>
+            <label for="address">Alamat:</label><br>
+            <input type="text" id="address" name="address" required><br>
+            <button type="submit" id="submitBtn">Submit</button>
+        </form>
+
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>NIM</th>
+                    <th>Kelas</th>
+                    <th>Alamat</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('studentForm');
+        const tableBody = document.getElementById('tableBody');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Event DOM 1: Submit form
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form reload
+
+            const name = document.getElementById('name').value;
+            const nim = document.getElementById('nim').value;
+            const kelas = document.getElementById('class').value;
+            const address = document.getElementById('address').value;
+
+            // Event DOM 2: Append to table when form is submitted
+            const row = document.createElement('tr');
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = name;
+            row.appendChild(nameCell);
+
+            const nimCell = document.createElement('td');
+            nimCell.textContent = nim;
+            row.appendChild(nimCell);
+
+            const classCell = document.createElement('td');
+            classCell.textContent = kelas;
+            row.appendChild(classCell);
+
+            const addressCell = document.createElement('td');
+            addressCell.textContent = address;
+            row.appendChild(addressCell);
+
+            tableBody.appendChild(row);
+
+            // Clear form
+            form.reset();
+
+            // Event DOM 3: Disable button after form submission
+            submitBtn.disabled = true;
+        });
+
+        // Event DOM 4: Enable button if any input is changed
+        form.addEventListener('input', function() {
+            submitBtn.disabled = false;
+        });
+
+        // Event DOM 5: Highlight table rows on hover
+        tableBody.addEventListener('mouseover', function(e) {
+            if (e.target.tagName === 'TD') {
+                e.target.parentNode.style.backgroundColor = '#f0f0f0';
+            }
+        });
+
+        tableBody.addEventListener('mouseout', function(e) {
+            if (e.target.tagName === 'TD') {
+                e.target.parentNode.style.backgroundColor = '';
+            }
+        });
+    </script>
+</body>
+</html>
